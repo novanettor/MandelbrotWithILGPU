@@ -7,8 +7,10 @@ namespace Mandelbrot.App
 {
     class MandelbrotRenderer : IDisposable
     {
-        private CpuIterator _cpuIterator;
-        private CpuImageMapper _cpuImageMapper;
+        private IIterator _cpuIterator;
+        private IImageMapper _cpuImageMapper;
+        private IIterator _gpuIterator;
+        private IImageMapper _gpuImageMapper;
         private WriteableBitmap? _bitmap;
         private int[,]? _iterations;
         private byte[]? _pixels;
@@ -17,13 +19,22 @@ namespace Mandelbrot.App
         private bool _useGpu;
         public bool UseGpu { get => _useGpu; set => _useGpu = value; }
 
-        public IIterator Iterator => _cpuIterator;
-        public IImageMapper ImageMapper => _cpuImageMapper;
+        public IIterator Iterator => (_useGpu ? _gpuIterator : _cpuIterator) ?? _cpuIterator;
+        public IImageMapper ImageMapper => (_useGpu ? _gpuImageMapper : _cpuImageMapper) ?? _cpuImageMapper;
 
         public MandelbrotRenderer()
         {
             _cpuIterator = new CpuIterator();
             _cpuImageMapper = new CpuImageMapper();
+            try
+            {
+                _gpuIterator = new GpuIterator();
+                _gpuImageMapper = new GpuImageMapper();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Meh. Cuda doesn't seem to work. Did you remember to install an NVidida card?\r\n" + ex.Message);
+            }
         }
 
         public ImageSource GenerateImage(int width, int height, ComplexDouble center, double step, int[] palette)
@@ -66,6 +77,8 @@ namespace Mandelbrot.App
             {
                 if (disposing)
                 {
+                    ((IDisposable)_gpuIterator).Dispose();
+                    ((IDisposable)_gpuImageMapper).Dispose();
                 }
                 _disposed = true;
             }
