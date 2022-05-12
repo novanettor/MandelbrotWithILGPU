@@ -9,4 +9,65 @@
     <UserControl.Background>
         <ImageBrush x:Name="backgroundBrush" />
     </UserControl.Background>
+    <StackPanel HorizontalAlignment="Left" Grid.IsSharedSizeScope="True">
+        <StackPanel.Style>
+            <Style TargetType="StackPanel">
+                <Style.Triggers>
+                    <DataTrigger Binding="{Binding Path=ShowUI}" Value="false">
+                        <Setter Property="Visibility" Value="Hidden" />
+                    </DataTrigger>
+                </Style.Triggers>
+            </Style>
+        </StackPanel.Style>
+        <StackPanel.Resources>
+            <Style x:Key="Label" TargetType="TextBlock">
+                <Setter Property="Width" Value="75" />
+                <Setter Property="Foreground" Value="LightGray" />
+            </Style>
+            <Style x:Key="Value" TargetType="TextBlock">
+                <Setter Property="Foreground" Value="White" />
+            </Style>
+        </StackPanel.Resources>
+        <StackPanel Orientation="Horizontal">
+            <TextBlock Style="{StaticResource Label}" Text="Center:"></TextBlock>
+            <TextBlock Style="{StaticResource Value}" Text="{Binding Path=Center}"></TextBlock>
+        </StackPanel>
+        <StackPanel Orientation="Horizontal">
+            <TextBlock Style="{StaticResource Label}" Text="Step:"></TextBlock>
+            <TextBlock Style="{StaticResource Value}" Text="{Binding Path=Step}"></TextBlock>
+        </StackPanel>
+        <StackPanel Orientation="Horizontal">
+            <TextBlock Style="{StaticResource Label}" Text="Iterations:"></TextBlock>
+            <TextBlock Style="{StaticResource Value}" Text="{Binding Path=Depth}"></TextBlock>
+        </StackPanel>
+        <StackPanel Orientation="Horizontal">
+            <TextBlock Style="{StaticResource Label}" Text="Use GPU:"></TextBlock>
+            <CheckBox IsChecked="{Binding Path=UseGpu}"></CheckBox>
+        </StackPanel>
+        <StackPanel Orientation="Horizontal">
+            <TextBlock Style="{StaticResource Label}" Text="R. time (ms):"></TextBlock>
+            <TextBlock Style="{StaticResource Value}" Text="{Binding Path=RenderTimeMs}"></TextBlock>
+        </StackPanel>
+        <TextBlock Text="Help:" Margin="0, 10, 0, 0" Foreground="LightGray"></TextBlock>
+        <StackPanel Orientation="Horizontal">
+            <TextBlock Style="{StaticResource Label}" Text="Center:"></TextBlock>
+            <TextBlock Style="{StaticResource Value}" Text="Left MButton"></TextBlock>
+        </StackPanel>
+        <StackPanel Orientation="Horizontal">
+            <TextBlock Style="{StaticResource Label}" Text="Zoom:"></TextBlock>
+            <TextBlock Style="{StaticResource Value}" Text="MWheel"></TextBlock>
+        </StackPanel>
+        <StackPanel Orientation="Horizontal">
+            <TextBlock Style="{StaticResource Label}" Text="Iterations:"></TextBlock>
+            <TextBlock Style="{StaticResource Value}" Text="Shift + MWheel"></TextBlock>
+        </StackPanel>
+        <StackPanel Orientation="Horizontal">
+            <TextBlock Style="{StaticResource Label}" Text="Use GPU:"></TextBlock>
+            <TextBlock Style="{StaticResource Value}" Text="G"></TextBlock>
+        </StackPanel>
+        <StackPanel Orientation="Horizontal">
+            <TextBlock Style="{StaticResource Label}" Text="Hide UI:"></TextBlock>
+            <TextBlock Style="{StaticResource Value}" Text="F1"></TextBlock>
+        </StackPanel>
+    </StackPanel>
 </UserControl>

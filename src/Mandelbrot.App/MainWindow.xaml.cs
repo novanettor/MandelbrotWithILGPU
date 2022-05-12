@@ -1,28 +1,36 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
+﻿using System.Windows;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace Mandelbrot.App
 {
-    /// <summary>
-    /// Interaction logic for MainWindow.xaml
-    /// </summary>
     public partial class MainWindow : Window
     {
         public MainWindow()
         {
             InitializeComponent();
+        }
+
+        protected override void OnKeyDown(KeyEventArgs e)
+        {
+            if (e.Key == Key.Home)
+            {
+                mandelbrot.Reset();
+                return;
+            }
+
+            if (e.Key == Key.F1)
+            {
+                mandelbrot.ShowUI = !mandelbrot.ShowUI;
+                return;
+            }
+
+            if (e.Key == Key.G)
+            {
+                mandelbrot.UseGpu = !mandelbrot.UseGpu;
+                return;
+            }
+
+            base.OnKeyDown(e);
         }
     }
 }
