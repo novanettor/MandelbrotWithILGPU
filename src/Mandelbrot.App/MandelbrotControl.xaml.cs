@@ -182,7 +182,6 @@ namespace Mandelbrot.App
             Depth = 100;
             Step = 0.003;
             Center = new ComplexDouble(-0.5, 0);
-            //Palette = GradientPaletteGenerator.GeneratePalette(Depth);
         }
 
         protected override void OnMouseDown(MouseButtonEventArgs e)

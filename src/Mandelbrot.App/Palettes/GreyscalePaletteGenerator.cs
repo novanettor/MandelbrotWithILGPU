@@ -11,7 +11,7 @@ namespace Mandelbrot.App.Palettes
             var palette = new int[size];
             for (int i = 0; i < size; i++)
             {
-                var component = (int)((float)(i + 1) / size * 255);
+                var component = (int)((float)(size - i - 1) / size * 255);
                 palette[i] = Color.FromArgb(component, component, component).ToArgb();
             }
             return palette;

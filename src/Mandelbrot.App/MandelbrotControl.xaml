@@ -16,7 +16,7 @@
     <UserControl.Background>
         <ImageBrush x:Name="backgroundBrush" />
     </UserControl.Background>
-    <StackPanel HorizontalAlignment="Left" Grid.IsSharedSizeScope="True">
+    <StackPanel HorizontalAlignment="Left" Margin="10, 10, 0, 0" Grid.IsSharedSizeScope="True">
         <StackPanel.Style>
             <Style TargetType="StackPanel">
                 <Style.Triggers>
@@ -29,14 +29,15 @@
         <StackPanel.Resources>
             <Style x:Key="Heading" TargetType="TextBlock">
                 <Setter Property="Margin" Value="0, 10, 0, 2" />
-                <Setter Property="Foreground" Value="White" />
+                <Setter Property="Foreground" Value="Gray" />
+                <Setter Property="FontWeight" Value="Bold" />
             </Style>
             <Style x:Key="Label" TargetType="TextBlock">
                 <Setter Property="Width" Value="75" />
-                <Setter Property="Foreground" Value="LightGray" />
+                <Setter Property="Foreground" Value="Gray" />
             </Style>
             <Style x:Key="Value" TargetType="TextBlock">
-                <Setter Property="Foreground" Value="White" />
+                <Setter Property="Foreground" Value="LightGray" />
             </Style>
         </StackPanel.Resources>
         <TextBlock Style="{StaticResource Heading}" Text="Stats:"></TextBlock>
