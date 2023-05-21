@@ -3,9 +3,16 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:local="clr-namespace:Mandelbrot.App"
+             xmlns:local="clr-namespace:Mandelbrot.App" xmlns:palettes="clr-namespace:Mandelbrot.App.Palettes"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
+    <UserControl.Resources>
+        <palettes:PaletteGeneratorCollection x:Key="PaletteGenerators" x:Name="PaletteGenerators">
+            <palettes:BinaryPaletteGenerator />
+            <palettes:GreyscalePaletteGenerator />
+            <palettes:GradientPaletteGenerator />
+        </palettes:PaletteGeneratorCollection>
+    </UserControl.Resources>
     <UserControl.Background>
         <ImageBrush x:Name="backgroundBrush" />
     </UserControl.Background>
@@ -20,6 +27,10 @@
             </Style>
         </StackPanel.Style>
         <StackPanel.Resources>
+            <Style x:Key="Heading" TargetType="TextBlock">
+                <Setter Property="Margin" Value="0, 10, 0, 2" />
+                <Setter Property="Foreground" Value="White" />
+            </Style>
             <Style x:Key="Label" TargetType="TextBlock">
                 <Setter Property="Width" Value="75" />
                 <Setter Property="Foreground" Value="LightGray" />
@@ -28,6 +39,7 @@
                 <Setter Property="Foreground" Value="White" />
             </Style>
         </StackPanel.Resources>
+        <TextBlock Style="{StaticResource Heading}" Text="Stats:"></TextBlock>
         <StackPanel Orientation="Horizontal">
             <TextBlock Style="{StaticResource Label}" Text="Center:"></TextBlock>
             <TextBlock Style="{StaticResource Value}" Text="{Binding Path=Center}"></TextBlock>
@@ -41,14 +53,28 @@
             <TextBlock Style="{StaticResource Value}" Text="{Binding Path=Depth}"></TextBlock>
         </StackPanel>
         <StackPanel Orientation="Horizontal">
+            <TextBlock Style="{StaticResource Label}" Text="R. time (ms):"></TextBlock>
+            <TextBlock Style="{StaticResource Value}" Text="{Binding Path=RenderTimeMs}"></TextBlock>
+        </StackPanel>
+        <TextBlock Style="{StaticResource Heading}" Text="Rendering:"></TextBlock>
+        <StackPanel Orientation="Horizontal">
             <TextBlock Style="{StaticResource Label}" Text="Use GPU:"></TextBlock>
             <CheckBox IsChecked="{Binding Path=UseGpu}"></CheckBox>
         </StackPanel>
         <StackPanel Orientation="Horizontal">
-            <TextBlock Style="{StaticResource Label}" Text="R. time (ms):"></TextBlock>
-            <TextBlock Style="{StaticResource Value}" Text="{Binding Path=RenderTimeMs}"></TextBlock>
+            <TextBlock Style="{StaticResource Label}" Text="Palette:"></TextBlock>
+            <ComboBox Name="PaletteGeneratorCombo"
+                      ItemsSource="{StaticResource PaletteGenerators}"
+                      SelectedIndex="2"
+                      IsEditable="False">
+                <ComboBox.ItemTemplate>
+                    <DataTemplate>
+                        <TextBlock Text="{Binding DisplayName}" />
+                    </DataTemplate>
+                </ComboBox.ItemTemplate>
+            </ComboBox>
         </StackPanel>
-        <TextBlock Text="Help:" Margin="0, 10, 0, 0" Foreground="LightGray"></TextBlock>
+        <TextBlock Style="{StaticResource Heading}" Text="Help:"></TextBlock>
         <StackPanel Orientation="Horizontal">
             <TextBlock Style="{StaticResource Label}" Text="Center:"></TextBlock>
             <TextBlock Style="{StaticResource Value}" Text="Left MButton"></TextBlock>

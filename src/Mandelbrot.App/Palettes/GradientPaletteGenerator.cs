@@ -14,6 +14,9 @@ namespace Mandelbrot.App.Palettes
             _stops = stops ?? GetDefaultStops();
         }
 
+        public string DisplayName => "Gradient";
+
+
         public int[] GeneratePalette(int size)
         {
             var palette = new int[size];

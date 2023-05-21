@@ -1,13 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Mandelbrot.App.Palettes
+﻿namespace Mandelbrot.App.Palettes
 {
     interface IPaletteGenerator
     {
+        string DisplayName { get; }
         int[] GeneratePalette(int size);
     }
 }

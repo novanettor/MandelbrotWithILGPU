@@ -1,19 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Linq;
 using System.Runtime.CompilerServices;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
+using Mandelbrot.App.Palettes;
 
 namespace Mandelbrot.App
 {
@@ -25,7 +16,7 @@ namespace Mandelbrot.App
         ComplexDouble _center;
         double _step;
         int _depth;
-        int[] _palette;
+        int[]? _palette;
         TimeSpan _renderTime;
 
         #region Dependency properties
@@ -142,10 +133,17 @@ namespace Mandelbrot.App
             DataContext = this;
 
             PropertyChanged += MandelbrotControl_PropertyChanged;
+            PaletteGeneratorCombo.SelectionChanged += PaletteGeneratorCombo_SelectionChanged;
 
             SetDefaults();
 
             Dispatcher.ShutdownStarted += Dispatcher_ShutdownStarted;
+        }
+
+        private void PaletteGeneratorCombo_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            Palette = ((IPaletteGenerator)PaletteGeneratorCombo.SelectedItem).GeneratePalette(_depth);
+            RenderMandelbrotImage();
         }
 
         private void MandelbrotControl_PropertyChanged(object? sender, PropertyChangedEventArgs e)
@@ -153,7 +151,7 @@ namespace Mandelbrot.App
             switch (e.PropertyName)
             {
                 case "Depth":
-                    Palette = OldGradientPaletteGenerator.GeneratePalette(Depth);
+                    Palette = ((IPaletteGenerator)PaletteGeneratorCombo.SelectedItem).GeneratePalette(_depth);
                     break;
             }
         }
@@ -203,7 +201,6 @@ namespace Mandelbrot.App
                 if (Depth > 50 || e.Delta > 0)
                 {
                     Depth += e.Delta > 0 ? 25 : -25;
-                    Palette = OldGradientPaletteGenerator.GeneratePalette(Depth);
                 }
             }
             else

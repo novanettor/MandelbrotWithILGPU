@@ -5,6 +5,8 @@ namespace Mandelbrot.App.Palettes
 {
     class BinaryPaletteGenerator : IPaletteGenerator
     {
+        public string DisplayName => "Binary";
+
         public int[] GeneratePalette(int size)
         {
             var palette = new int[size];

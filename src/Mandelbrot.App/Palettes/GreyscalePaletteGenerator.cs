@@ -4,6 +4,8 @@ namespace Mandelbrot.App.Palettes
 {
     class GreyscalePaletteGenerator : IPaletteGenerator
     {
+        public string DisplayName => "Greyscale";
+
         public int[] GeneratePalette(int size)
         {
             var palette = new int[size];
