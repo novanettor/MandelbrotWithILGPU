@@ -12,7 +12,7 @@ namespace Mandelbrot.App
 
         protected override void OnKeyDown(KeyEventArgs e)
         {
-            if (e.Key == Key.Escape)
+            if (e.Key == Key.F2)
             {
                 mandelbrot.Reset();
                 return;

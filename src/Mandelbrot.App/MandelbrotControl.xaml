@@ -96,5 +96,9 @@
             <TextBlock Style="{StaticResource Label}" Text="Hide UI:"></TextBlock>
             <TextBlock Style="{StaticResource Value}" Text="F1"></TextBlock>
         </StackPanel>
+        <StackPanel Orientation="Horizontal">
+            <TextBlock Style="{StaticResource Label}" Text="Reset:"></TextBlock>
+            <TextBlock Style="{StaticResource Value}" Text="F2"></TextBlock>
+        </StackPanel>
     </StackPanel>
 </UserControl>
