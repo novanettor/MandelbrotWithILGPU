@@ -122,14 +122,14 @@ namespace Mandelbrot.App
             }
         }
 
-        public double RenderTimeMs
+        public int RenderTimeMs
         {
-            get => RenderTime.TotalMilliseconds;
+            get => Convert.ToInt32(RenderTime.TotalMilliseconds);
         }
 
         // INotifyPropertyChanged
-        public event PropertyChangedEventHandler PropertyChanged;
-        protected void OnPropertyChanged([CallerMemberName] string name = null)
+        public event PropertyChangedEventHandler? PropertyChanged;
+        protected void OnPropertyChanged([CallerMemberName] string? name = null)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
         }
@@ -141,9 +141,21 @@ namespace Mandelbrot.App
             InitializeComponent();
             DataContext = this;
 
+            PropertyChanged += MandelbrotControl_PropertyChanged;
+
             SetDefaults();
 
             Dispatcher.ShutdownStarted += Dispatcher_ShutdownStarted;
+        }
+
+        private void MandelbrotControl_PropertyChanged(object? sender, PropertyChangedEventArgs e)
+        {
+            switch (e.PropertyName)
+            {
+                case "Depth":
+                    Palette = OldGradientPaletteGenerator.GeneratePalette(Depth);
+                    break;
+            }
         }
 
         public void Reset()
@@ -172,7 +184,7 @@ namespace Mandelbrot.App
             Depth = 100;
             Step = 0.003;
             Center = new ComplexDouble(-0.5, 0);
-            Palette = GradientPaletteGenerator.GeneratePalette(Depth);
+            //Palette = GradientPaletteGenerator.GeneratePalette(Depth);
         }
 
         protected override void OnMouseDown(MouseButtonEventArgs e)
@@ -191,7 +203,7 @@ namespace Mandelbrot.App
                 if (Depth > 50 || e.Delta > 0)
                 {
                     Depth += e.Delta > 0 ? 25 : -25;
-                    Palette = GradientPaletteGenerator.GeneratePalette(Depth);
+                    Palette = OldGradientPaletteGenerator.GeneratePalette(Depth);
                 }
             }
             else

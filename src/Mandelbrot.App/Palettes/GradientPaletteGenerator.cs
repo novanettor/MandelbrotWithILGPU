@@ -1,20 +1,20 @@
 ﻿using System.Collections.Generic;
 using System.Drawing;
 
-namespace Mandelbrot.App
+namespace Mandelbrot.App.Palettes
 {
-    static class GradientPaletteGenerator
+    class GradientPaletteGenerator : IPaletteGenerator
     {
-        private static readonly IList<GradientStop> _stops = new List<GradientStop>
-        {
-            new GradientStop(0.000f, 0, 0, 0),
-            new GradientStop(0.160f, 32, 107, 202),
-            new GradientStop(0.420f, 237, 255, 255),
-            new GradientStop(0.642f, 255, 169, 0),
-            new GradientStop(1.000f, 0, 0, 0)
-        };
+        private readonly IList<GradientStop> _stops;
 
-        public static int[] GeneratePalette(int size)
+        public GradientPaletteGenerator() : this(null) { }
+
+        public GradientPaletteGenerator(IList<GradientStop>? stops)
+        {
+            _stops = stops ?? GetDefaultStops();
+        }
+
+        public int[] GeneratePalette(int size)
         {
             var palette = new int[size];
             for (int i = 0; i < size; i++)
@@ -24,7 +24,7 @@ namespace Mandelbrot.App
             return palette;
         }
 
-        private static int GetColor(float p)
+        private int GetColor(float p)
         {
             if (p > 1) p = 1;
             for (int i = 0; i < _stops.Count - 1; i++)
@@ -48,7 +48,17 @@ namespace Mandelbrot.App
             return 0;
         }
 
-        private struct GradientStop
+        public IList<GradientStop> GetDefaultStops() => new List<GradientStop>
+        {
+            new GradientStop(0.000f, 0, 0, 0),
+            new GradientStop(0.160f, 32, 107, 202),
+            new GradientStop(0.420f, 237, 255, 255),
+            new GradientStop(0.642f, 255, 169, 0),
+            new GradientStop(1.000f, 0, 0, 0)
+        };
+
+
+        public struct GradientStop
         {
             public float offset;
             public byte r;
@@ -66,9 +76,9 @@ namespace Mandelbrot.App
             public GradientStop(float offset, Color color)
             {
                 this.offset = offset;
-                this.r = color.R;
-                this.g = color.G;
-                this.b = color.B;
+                r = color.R;
+                g = color.G;
+                b = color.B;
             }
         }
     }

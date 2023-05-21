@@ -33,7 +33,7 @@ namespace Mandelbrot.App
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Meh. Cuda doesn't seem to work. Did you remember to install an NVidida card?\r\n" + ex.Message);
+                throw new Exception($"Failed to initialize ILGPU stuff: {ex.Message}", ex);
             }
         }
 
