@@ -11,6 +11,18 @@
             B = b;
         }
 
+        public static ComplexDouble operator +(ComplexDouble x, ComplexDouble y)
+            => new ComplexDouble(x.A + y.A, x.B + y.B);
+
+        public static ComplexDouble operator *(ComplexDouble x, ComplexDouble y)
+            => new ComplexDouble(x.A * y.A - x.B * y.B, x.A * y.B + x.B * y.A);
+
+        public double ModulusSquared => A * A + B * B;
+
+        public double Modulus => Math.Sqrt(ModulusSquared);
+
+        #region Tedious stuff
+
         public bool Equals(ComplexDouble other)
         {
             return Equals(A, other.A) && Equals(B, other.B);
@@ -31,20 +43,12 @@
 
         public override string ToString() => $"({A},{B})";
 
-        public double ModulusSquared => A * A + B * B;
-
-        public double Modulus => Math.Sqrt(ModulusSquared);
-
-        public static ComplexDouble operator +(ComplexDouble x, ComplexDouble y)
-            => new ComplexDouble(x.A + y.A, x.B + y.B);
-
-        public static ComplexDouble operator *(ComplexDouble x, ComplexDouble y)
-            => new ComplexDouble(x.A * y.A - x.B * y.B, x.A * y.B + x.B * y.A);
-
         public static bool operator ==(ComplexDouble x, ComplexDouble y)
             => Equals(x, y);
 
         public static bool operator !=(ComplexDouble x, ComplexDouble y)
             => !Equals(x, y);
+
+        #endregion
     }
 }
