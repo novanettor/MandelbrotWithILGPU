@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Numerics;
 using System.Windows;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
@@ -37,7 +38,7 @@ namespace Mandelbrot.App
             }
         }
 
-        public ImageSource GenerateImage(int width, int height, ComplexDouble center, double step, int[] palette)
+        public ImageSource GenerateImage(int width, int height, Complex center, double step, int[] palette)
         {
             // Generate a new bitmap if necessary
             if (_bitmap == null || _bitmap.PixelWidth != width || _bitmap.PixelHeight == height)
@@ -48,7 +49,7 @@ namespace Mandelbrot.App
             }
 
             // Find the bottom left in the complex plane
-            var start = new ComplexDouble(center.A - (width / 2) * step, center.B - (height / 2) * step);
+            var start = new Complex(center.Real - (width / 2) * step, center.Imaginary - (height / 2) * step);
 
             // Do the Mandelbrot thing
             Iterator.IterateRange(start, width, height, step, palette.Length - 1, _iterations!);

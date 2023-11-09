@@ -1,5 +1,6 @@
 ﻿using System;
 using System.ComponentModel;
+using System.Numerics;
 using System.Runtime.CompilerServices;
 using System.Windows;
 using System.Windows.Controls;
@@ -13,7 +14,7 @@ namespace Mandelbrot.App
         private MandelbrotRenderer _renderer = new MandelbrotRenderer();
 
         bool _showUI;
-        ComplexDouble _center;
+        Complex _center;
         double _step;
         int _depth;
         int[]? _palette;
@@ -34,7 +35,7 @@ namespace Mandelbrot.App
             }
         }
 
-        public ComplexDouble Center
+        public Complex Center
         {
             get => _center;
             set
@@ -181,7 +182,7 @@ namespace Mandelbrot.App
             ShowUI = true;
             Depth = 100;
             Step = 0.003;
-            Center = new ComplexDouble(-0.5, 0);
+            Center = new Complex(-0.5, 0);
             PaletteGeneratorCombo.SelectedIndex = 2;
         }
 
@@ -189,7 +190,7 @@ namespace Mandelbrot.App
         {
             var position = e.GetPosition(this);
 
-            Center += new ComplexDouble((position.X - ActualWidth / 2) * Step, -(position.Y - ActualHeight / 2) * Step);
+            Center += new Complex((position.X - ActualWidth / 2) * Step, -(position.Y - ActualHeight / 2) * Step);
 
             RenderMandelbrotImage();
         }

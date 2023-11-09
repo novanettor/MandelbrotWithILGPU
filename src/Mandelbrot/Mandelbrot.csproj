@@ -8,6 +8,14 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="ComplexDouble.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="ComplexDouble.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="ILGPU" Version="0.9.2" />
   </ItemGroup>
 

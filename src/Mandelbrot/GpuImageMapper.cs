@@ -6,9 +6,9 @@ namespace Mandelbrot
 {
     public class GpuImageMapper : IImageMapper, IDisposable
     {
-        private static Context _context;
-        private static Accelerator _accelerator;
-        private static Action<Index2, ArrayView2D<int>, ArrayView<int>, ArrayView<byte>> _mapKernel;
+        private readonly Context _context;
+        private readonly Accelerator _accelerator;
+        private readonly Action<Index2, ArrayView2D<int>, ArrayView<int>, ArrayView<byte>> _mapKernel;
         private bool _disposed;
 
         public GpuImageMapper()
