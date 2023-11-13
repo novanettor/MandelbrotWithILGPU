@@ -51,7 +51,7 @@ namespace Mandelbrot
             {
                 z = z * z + c;
 
-                if (z.Magnitude >= 2)
+                if (z.MagnitudeSquared() >= 4)
                     break;
             }
 
