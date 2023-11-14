@@ -17,9 +17,9 @@
         public static ComplexDouble operator *(ComplexDouble x, ComplexDouble y)
             => new ComplexDouble(x.A * y.A - x.B * y.B, x.A * y.B + x.B * y.A);
 
-        public double ModulusSquared => A * A + B * B;
+        public double MagnitudeSquared => A * A + B * B;
 
-        public double Modulus => Math.Sqrt(ModulusSquared);
+        public double Magnitude => Math.Sqrt(MagnitudeSquared);
 
         #region Tedious stuff
 
@@ -28,9 +28,9 @@
             return Equals(A, other.A) && Equals(B, other.B);
         }
 
-        public override bool Equals(object obj)
+        public override bool Equals(object? obj)
         {
-            return (obj is ComplexDouble cd) ? Equals(cd) : false;
+            return (obj is ComplexDouble cd) && Equals(cd);
         }
 
         public override int GetHashCode()

@@ -1,7 +1,6 @@
 ﻿using ILGPU;
 using ILGPU.Runtime;
 using ILGPU.Runtime.Cuda;
-using System.Numerics;
 
 namespace Mandelbrot
 {
@@ -9,7 +8,7 @@ namespace Mandelbrot
     {
         private readonly Context _context;
         private readonly Accelerator _accelerator;
-        private readonly Action<Index2, Complex, double, int, ArrayView2D<int>> _iterateKernel;
+        private readonly Action<Index2, ComplexDouble, double, int, ArrayView2D<int>> _iterateKernel;
         private bool _disposed;
 
         public GpuIterator()
@@ -17,10 +16,10 @@ namespace Mandelbrot
             _context = new Context();
             _accelerator = new CudaAccelerator(_context);
 
-            _iterateKernel = _accelerator.LoadAutoGroupedStreamKernel<Index2, Complex, double, int, ArrayView2D<int>>(IterateKernel);
+            _iterateKernel = _accelerator.LoadAutoGroupedStreamKernel<Index2, ComplexDouble, double, int, ArrayView2D<int>>(IterateKernel);
         }
 
-        public void IterateRange(Complex start, int width, int height, double step, int limit, int[,] output)
+        public void IterateRange(ComplexDouble start, int width, int height, double step, int limit, int[,] output)
         {
             var iterationsBuffer = _accelerator.Allocate<int>(width, height);
 
@@ -38,20 +37,20 @@ namespace Mandelbrot
 
         private static void IterateKernel(
             Index2 index,
-            Complex start,
+            ComplexDouble start,
             double step,
             int limit,
             ArrayView2D<int> output)
         {
-            var c = new Complex(start.Real + index.X * step, start.Imaginary + index.Y * step);
-            var z = new Complex(0, 0);
+            var c = new ComplexDouble(start.A + index.X * step, start.B + index.Y * step);
+            var z = new ComplexDouble(0, 0);
 
             var iterations = 0;
             for (; iterations < limit; iterations++)
             {
                 z = z * z + c;
 
-                if (z.MagnitudeSquared() >= 4)
+                if (z.MagnitudeSquared >= 4)
                     break;
             }
 

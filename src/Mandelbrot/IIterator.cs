@@ -1,6 +1,4 @@
-﻿using System.Numerics;
-
-namespace Mandelbrot
+﻿namespace Mandelbrot
 {
     public interface IIterator
     {
@@ -14,6 +12,6 @@ namespace Mandelbrot
         /// <param name="step">The interval between samples in the complex plane</param>
         /// <param name="limit">The maximum of number of iterations to perform</param>
         /// <param name="output">The resulting iterations map</param>
-        void IterateRange(Complex start, int width, int height, double step, int limit, int[,] output);
+        void IterateRange(ComplexDouble start, int width, int height, double step, int limit, int[,] output);
     }
 }
